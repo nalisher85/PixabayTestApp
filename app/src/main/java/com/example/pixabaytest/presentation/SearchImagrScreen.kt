@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
@@ -24,11 +25,14 @@ fun SearchImageScreen(viewModel: QueryImagesViewModel) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar {
+            TopAppBar(
+                backgroundColor = Color.White,
+                contentColor = Color.Black
+            ) {
                 TextField(
                     value = query.value,
                     onValueChange = viewModel.onQuery,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
@@ -71,46 +75,7 @@ fun SearchImageScreen(viewModel: QueryImagesViewModel) {
                                 viewModel.onNextPage()
                             }
 
-                            SubcomposeAsyncImage(
-                                model = item.imageUrl,
-                                contentDescription = "",
-
-                                ) {
-                                when(val state = painter.state) {
-                                    AsyncImagePainter.State.Empty -> {}
-                                    is AsyncImagePainter.State.Error -> {
-                                        Text(text = (painter.state as? AsyncImagePainter.State.Error)
-                                            ?.result?.throwable?.localizedMessage ?: "Error loading image",
-                                        modifier = Modifier.padding(vertical = 10.dp))
-                                    }
-                                    is AsyncImagePainter.State.Loading ->
-                                        Text(
-                                            text = "Loading... [$i]",
-                                            modifier = Modifier.padding(vertical = 20.dp)
-                                        )
-                                    is AsyncImagePainter.State.Success -> {
-                                        Box(contentAlignment = Alignment.Center) {
-
-                                            val painter = state.painter
-
-                                            Image(painter = painter, contentDescription = "")
-
-                                            Column(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .align(Alignment.BottomCenter),
-                                                horizontalAlignment = Alignment.CenterHorizontally
-                                            ) {
-                                                Text(text = item.user + " item: $i", modifier = Modifier.padding(bottom = 10.dp))
-                                                Row {
-                                                    Icon(modifier = Modifier.size(20.dp), painter = painterResource(id = R.drawable.thumb_up), contentDescription = "")
-                                                    Text(text = item.likes.toString(), modifier = Modifier.padding(start = 10.dp))
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            ImageItem(item = item)
                         }
 
                         item {
@@ -127,5 +92,47 @@ fun SearchImageScreen(viewModel: QueryImagesViewModel) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ImageItem(item: QueryImagesViewModel.ImageModel) {
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        SubcomposeAsyncImage(
+            model = item.imageUrl,
+            contentDescription = "",
+
+            ) {
+            when(val state = painter.state) {
+                AsyncImagePainter.State.Empty -> {}
+                is AsyncImagePainter.State.Error -> {
+                    Text(text = (painter.state as? AsyncImagePainter.State.Error)
+                        ?.result?.throwable?.localizedMessage ?: "Error loading image",
+                        modifier = Modifier.padding(vertical = 10.dp))
+                }
+                is AsyncImagePainter.State.Loading ->
+                    Text(
+                        text = "Loading... ",
+                        modifier = Modifier.padding(vertical = 20.dp)
+                    )
+                is AsyncImagePainter.State.Success -> {
+                    Box(contentAlignment = Alignment.Center) {
+                        Image(painter = state.painter, contentDescription = "")
+
+                    }
+                }
+            }
+        }
+
+        Text(text = item.user, modifier = Modifier.padding(bottom = 10.dp))
+        Row {
+            Icon(modifier = Modifier.size(20.dp), painter = painterResource(id = R.drawable.thumb_up), contentDescription = "")
+            Text(text = item.likes.toString(), modifier = Modifier.padding(start = 10.dp))
+        }
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }

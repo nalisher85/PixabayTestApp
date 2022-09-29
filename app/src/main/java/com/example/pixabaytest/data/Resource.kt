@@ -1,6 +1,6 @@
 package com.example.pixabaytest.data
 
-import com.example.pixabaytest.data.network.ImageSearchResultData
+import com.example.pixabaytest.data.network.models.ImageSearchResultData
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(data: T? = null): Resource<T>(data)

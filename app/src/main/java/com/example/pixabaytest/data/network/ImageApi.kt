@@ -1,5 +1,6 @@
 package com.example.pixabaytest.data.network
 
+import com.example.pixabaytest.data.network.models.ImageSearchResultData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

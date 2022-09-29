@@ -1,4 +1,4 @@
-package com.example.pixabaytest.data.network
+package com.example.pixabaytest.data.network.models
 
 
 import androidx.annotation.Keep

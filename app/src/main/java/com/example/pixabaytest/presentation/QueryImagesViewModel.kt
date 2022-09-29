@@ -1,12 +1,12 @@
 package com.example.pixabaytest.presentation
 
-import android.util.Log
+import androidx.annotation.Keep
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pixabaytest.data.Repository
 import com.example.pixabaytest.data.Resource
 import com.example.pixabaytest.data.network.Constants.perPageCount
-import com.example.pixabaytest.data.network.ImageSearchResultData
+import com.example.pixabaytest.data.network.models.ImageSearchResultData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -108,6 +108,7 @@ class QueryImagesViewModel @Inject constructor(
 
 
 
+    @Keep
     data class UiState(
         val error: String? = null,
         val isLoading: Boolean = false,
@@ -116,12 +117,14 @@ class QueryImagesViewModel @Inject constructor(
         val endReached: Boolean = false
     )
 
+    @Keep
     data class UiModel(
         val total: Int,
         val totalLoaded: Int,
         val images: List<ImageModel> = emptyList()
     )
 
+    @Keep
     data class ImageModel(
         val id: Int,
         val imageUrl: String,
