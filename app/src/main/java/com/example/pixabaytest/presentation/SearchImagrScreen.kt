@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import com.example.pixabaytest.R
+import com.example.pixabaytest.ui.theme.Purple200
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -44,7 +45,7 @@ fun SearchImageScreen(viewModel: QueryImagesViewModel) {
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {                 
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(color = Purple200)
                 }
             }
             uiState.value.error != null && uiState.value.uiData?.images.isNullOrEmpty() -> {
@@ -85,7 +86,7 @@ fun SearchImageScreen(viewModel: QueryImagesViewModel) {
                         }
                         item {
                             if (uiState.value.isLoading) {
-                                CircularProgressIndicator()
+                                CircularProgressIndicator(color = Purple200)
                             }
                         }
                     }
