@@ -1,12 +1,14 @@
 package com.example.pixabaytest.presentation
 
 import androidx.annotation.Keep
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pixabaytest.data.Repository
 import com.example.pixabaytest.data.Resource
 import com.example.pixabaytest.data.network.Constants.perPageCount
 import com.example.pixabaytest.data.network.models.ImageSearchResultData
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -109,6 +111,7 @@ class QueryImagesViewModel @Inject constructor(
 
 
     @Keep
+    @Stable
     data class UiState(
         val error: String? = null,
         val isLoading: Boolean = false,
@@ -118,6 +121,7 @@ class QueryImagesViewModel @Inject constructor(
     )
 
     @Keep
+    @Stable
     data class UiModel(
         val total: Int,
         val totalLoaded: Int,
@@ -125,6 +129,7 @@ class QueryImagesViewModel @Inject constructor(
     )
 
     @Keep
+    @Stable
     data class ImageModel(
         val id: Int,
         val imageUrl: String,
